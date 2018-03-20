@@ -1,0 +1,1 @@
+echo end >>C:\Jar\PMB_end.txt exit

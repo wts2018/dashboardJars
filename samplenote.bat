@@ -1,0 +1,1 @@
+echo happy >>C:\Jar\myBatch.txt exit

@@ -1,0 +1,1 @@
+echo Start >>C:\Jar\PMB_start.txt exit

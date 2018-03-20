@@ -1,0 +1,1 @@
+echo Start >>C:\Jar\A2P_start.txt exit

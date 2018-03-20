@@ -1,0 +1,1 @@
+echo end >>C:\Jar\A2P_end.txt exit

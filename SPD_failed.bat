@@ -1,0 +1,1 @@
+echo failed >>C:\Jar\SPD_fail.txt exit
