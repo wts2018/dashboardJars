@@ -1,1 +1,0 @@
-echo Start >>C:\Jar\SPD_start.txt exit

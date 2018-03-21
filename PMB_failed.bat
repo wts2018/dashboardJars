@@ -1,1 +1,0 @@
-echo failed >>C:\Jar\PMB_fail.txt exit
