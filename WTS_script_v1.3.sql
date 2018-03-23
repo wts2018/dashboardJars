@@ -200,20 +200,20 @@ values(6,"PMB3",3,2,3,"DummyTXt",0,sysdate(),"2018-03-22 12:06:18","2018-03-22 1
 
 commit;
 
-alter table wts_app_tab add column buffer_time integer;
+alter table wts_app_tab add column buffer_minute_time integer;
 alter table wts_app_tab add column email_id varchar(200);
 
-alter table wts_batch_tab add column buffer_time integer;
+alter table wts_batch_tab add column buffer_minute_time integer;
 alter table wts_batch_tab add column email_id varchar(200);
 
 commit;
 
-UPDATE `wts_db`.`wts_app_tab` SET `buffer_time`='5' WHERE `application_id`='1';
-UPDATE `wts_db`.`wts_app_tab` SET `buffer_time`='5' WHERE `application_id`='2';
-UPDATE `wts_db`.`wts_app_tab` SET `buffer_time`='5' WHERE `application_id`='3';
-UPDATE `wts_db`.`wts_app_tab` SET `buffer_time`='5' WHERE `application_id`='4';
-UPDATE `wts_db`.`wts_app_tab` SET `buffer_time`='5' WHERE `application_id`='5';
-UPDATE `wts_db`.`wts_app_tab` SET `buffer_time`='5' WHERE `application_id`='6';
+UPDATE `wts_db`.`wts_app_tab` SET `buffer_minute_time`='5' WHERE `application_id`='1';
+UPDATE `wts_db`.`wts_app_tab` SET `buffer_minute_time`='5' WHERE `application_id`='2';
+UPDATE `wts_db`.`wts_app_tab` SET `buffer_minute_time`='5' WHERE `application_id`='3';
+UPDATE `wts_db`.`wts_app_tab` SET `buffer_minute_time`='5' WHERE `application_id`='4';
+UPDATE `wts_db`.`wts_app_tab` SET `buffer_minute_time`='5' WHERE `application_id`='5';
+UPDATE `wts_db`.`wts_app_tab` SET `buffer_minute_time`='5' WHERE `application_id`='6';
  commit;
  
  
