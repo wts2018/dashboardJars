@@ -110,7 +110,7 @@ insert into wts_status(status_id,NAME) values(3,"GREY");
  
 insert into WTS_process_tab (process_id,sequence,expected_start_time,
 expected_end_time,comments,last_update_time,name,weight,enable_flag)
-values(1,1,"2018-02-02  00:00:00","2020-02-02  00:00:00","Process the Forecast & Orders to generate the promise portfolio",
+values(1,1,"2018-02-02  16:07:00","2020-02-03  16:09:00","Process the Forecast & Orders to generate the promise portfolio",
 sysdate(),"Order Promiser",0,1);
 
 
@@ -137,10 +137,6 @@ values(2,"A2P",2,1,2,"DummyTXt",0,sysdate());
 insert into WTS_app_tab (application_id,name,sequence,process_id,trig_id,comments,weight,last_update_time)
 values(3,"PMB",3,1,2,"DummyTXt",0,sysdate());
 
-insert into wts_db.wts_process_tab (process_id,sequence,expected_start_time,
-expected_end_time,comments,last_update_time,name,weight,enable_flag)
-values(2,1,"2018-02-02  00:00:00","2020-02-02  00:00:00","Process the Forecast & Orders to generate the promise portfolio",
-sysdate(),"Order Promiser",0,true);
 
 
 COMMIT;
@@ -160,15 +156,15 @@ add column end_time timestamp;
 
 
 create table  WTS_treatment_tab(
-   treatment_date date
+   treatment_date varchar(20)
 );
 
 commit;
 
 
-UPDATE `wts_db`.`wts_app_tab` SET `start_time`='2018-03-08 07:20:00', `end_time`='2018-03-08 07:25:00' WHERE `application_id`='1';
-UPDATE `wts_db`.`wts_app_tab` SET `start_time`='2018-03-08 07:30:00', `end_time`='2018-03-07 07:35:00' WHERE `application_id`='2';
-UPDATE `wts_db`.`wts_app_tab` SET `start_time`='2018-03-08 07:40:00', `end_time`='2018-03-07 07:45:00' WHERE `application_id`='3';
+UPDATE `wts_db`.`wts_app_tab` SET `start_time`='2018-03-21 12:06:18', `end_time`='2018-03-13 16:30:00' WHERE `application_id`='1';
+UPDATE `wts_db`.`wts_app_tab` SET `start_time`='2018-03-13 14:22:00', `end_time`='2018-03-13 16:30:00' WHERE `application_id`='2';
+UPDATE `wts_db`.`wts_app_tab` SET `start_time`='2018-03-13 14:22:00', `end_time`='2018-03-13 16:30:00' WHERE `application_id`='3';
 
 
 DELETE FROM wts_db.wts_status_tab;
@@ -179,3 +175,58 @@ INSERT INTO wts_db.wts_status_tab (status_id, name) VALUES ('3', 'VIOLET');
 INSERT INTO wts_db.wts_status_tab (status_id, name) VALUES ('4', 'ORANGE');
 
 COMMIT;
+
+update wts_app_tab
+set name="SPD"
+where application_id=1;
+commit;
+
+
+
+insert into WTS_process_tab (process_id,sequence,expected_start_time,
+expected_end_time,comments,last_update_time,name,weight,enable_flag)
+values(2,2,"2018-03-22  14:45:24","2020-03-24  13:45:43","Order processing",
+sysdate(),"Process 3",0,1);
+
+
+insert into WTS_app_tab (application_id,name,sequence,process_id,trig_id,comments,weight,last_update_time,start_time,end_time)
+values(4,"SPD3",1,2,1,"DummyTXt",0,sysdate(),"2018-03-22 12:06:18","2018-03-22 18:06:18");
+
+insert into WTS_app_tab (application_id,name,sequence,process_id,trig_id,comments,weight,last_update_time,start_time,end_time)
+values(5,"A2P3",2,2,2,"DummyTXt",0,sysdate(),"2018-03-22 12:06:18","2018-03-22 18:30:18");
+
+insert into WTS_app_tab (application_id,name,sequence,process_id,trig_id,comments,weight,last_update_time,start_time,end_time)
+values(6,"PMB3",3,2,3,"DummyTXt",0,sysdate(),"2018-03-22 12:06:18","2018-03-22 19:06:18");
+
+commit;
+
+alter table wts_app_tab add column buffer_time integer;
+alter table wts_app_tab add column email_id varchar(200);
+
+alter table wts_batch_tab add column buffer_time integer;
+alter table wts_batch_tab add column email_id varchar(200);
+
+commit;
+
+UPDATE `wts_db`.`wts_app_tab` SET `buffer_time`='5' WHERE `application_id`='1';
+UPDATE `wts_db`.`wts_app_tab` SET `buffer_time`='5' WHERE `application_id`='2';
+UPDATE `wts_db`.`wts_app_tab` SET `buffer_time`='5' WHERE `application_id`='3';
+UPDATE `wts_db`.`wts_app_tab` SET `buffer_time`='5' WHERE `application_id`='4';
+UPDATE `wts_db`.`wts_app_tab` SET `buffer_time`='5' WHERE `application_id`='5';
+UPDATE `wts_db`.`wts_app_tab` SET `buffer_time`='5' WHERE `application_id`='6';
+ commit;
+ 
+ 
+ create table wts_new_eta_tab(
+ eta_id INTEGER NOT NULL AUTO_INCREMENT,
+ event_date VARCHAR(20) ,
+ process_id INTEGER ,
+ batch_id INTEGER ,
+ application_id INTEGER ,
+ new_eta_start_transaction TIMESTAMP NULL,
+ new_eta_end_transaction TIMESTAMP NULL,
+each_problem_flag boolean default false,
+ PRIMARY KEY(eta_id)
+ ); 
+ 
+ commit;
