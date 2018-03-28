@@ -111,7 +111,7 @@ insert into wts_status(status_id,NAME) values(3,"GREY");
 insert into WTS_process_tab (process_id,sequence,expected_start_time,
 expected_end_time,comments,last_update_time,name,weight,enable_flag)
 values(1,1,"2018-02-02  16:07:00","2020-02-03  16:09:00","Process the Forecast & Orders to generate the promise portfolio",
-sysdate(),"Order Promiser",0,1);
+sysdate(),"Process 1",0,1);
 
 
 insert into WTS_Trig_tab
@@ -129,7 +129,7 @@ insert into WTS_Trig_tab
 values(3,"22:10:00","8:00:00","oncspdp2.onc.michelin.com",23,"PMB_TRG","/busdata/ra2p/nca0",sysdate(),"Comment2");
 
 insert into WTS_app_tab (application_id,name,sequence,process_id,trig_id,comments,weight,last_update_time)
-values(1,"SupplyPlanDeployment",1,1,1,"DummyTExt",0,sysdate());
+values(1,"SPD",1,1,1,"DummyTExt",0,sysdate());
 
 insert into WTS_app_tab (application_id,name,sequence,process_id,trig_id,comments,weight,last_update_time)
 values(2,"A2P",2,1,2,"DummyTXt",0,sysdate());
@@ -176,44 +176,42 @@ INSERT INTO wts_db.wts_status_tab (status_id, name) VALUES ('4', 'ORANGE');
 
 COMMIT;
 
-update wts_app_tab
-set name="SPD"
-where application_id=1;
-commit;
+
 
 
 
 insert into WTS_process_tab (process_id,sequence,expected_start_time,
 expected_end_time,comments,last_update_time,name,weight,enable_flag)
 values(2,2,"2018-03-22  14:45:24","2020-03-24  13:45:43","Order processing",
-sysdate(),"Process 3",0,1);
+sysdate(),"Process 2",0,1);
 
 
 insert into WTS_app_tab (application_id,name,sequence,process_id,trig_id,comments,weight,last_update_time,start_time,end_time)
-values(4,"SPD3",1,2,1,"DummyTXt",0,sysdate(),"2018-03-22 12:06:18","2018-03-22 18:06:18");
+values(4,"SDS",1,2,1,"DummyTXt",0,sysdate(),"2018-03-22 12:06:18","2018-03-22 18:06:18");
 
 insert into WTS_app_tab (application_id,name,sequence,process_id,trig_id,comments,weight,last_update_time,start_time,end_time)
-values(5,"A2P3",2,2,2,"DummyTXt",0,sysdate(),"2018-03-22 12:06:18","2018-03-22 18:30:18");
+values(5,"ERP",2,2,2,"DummyTXt",0,sysdate(),"2018-03-22 12:06:18","2018-03-22 18:30:18");
 
 insert into WTS_app_tab (application_id,name,sequence,process_id,trig_id,comments,weight,last_update_time,start_time,end_time)
-values(6,"PMB3",3,2,3,"DummyTXt",0,sysdate(),"2018-03-22 12:06:18","2018-03-22 19:06:18");
+values(6,"DSS",3,2,3,"DummyTXt",0,sysdate(),"2018-03-22 12:06:18","2018-03-22 19:06:18");
 
 commit;
 
 alter table wts_app_tab add column buffer_minute_time integer;
 alter table wts_app_tab add column email_id varchar(200);
+alter table wts_app_tab add column ph_no numeric(20);
 
 alter table wts_batch_tab add column buffer_minute_time integer;
 alter table wts_batch_tab add column email_id varchar(200);
 
 commit;
 
-UPDATE `wts_db`.`wts_app_tab` SET `buffer_minute_time`='5' WHERE `application_id`='1';
-UPDATE `wts_db`.`wts_app_tab` SET `buffer_minute_time`='5' WHERE `application_id`='2';
-UPDATE `wts_db`.`wts_app_tab` SET `buffer_minute_time`='5' WHERE `application_id`='3';
-UPDATE `wts_db`.`wts_app_tab` SET `buffer_minute_time`='5' WHERE `application_id`='4';
-UPDATE `wts_db`.`wts_app_tab` SET `buffer_minute_time`='5' WHERE `application_id`='5';
-UPDATE `wts_db`.`wts_app_tab` SET `buffer_minute_time`='5' WHERE `application_id`='6';
+UPDATE `wts_db`.`wts_app_tab` SET `buffer_minute_time`='1' WHERE `application_id`='1';
+UPDATE `wts_db`.`wts_app_tab` SET `buffer_minute_time`='1' WHERE `application_id`='2';
+UPDATE `wts_db`.`wts_app_tab` SET `buffer_minute_time`='1' WHERE `application_id`='3';
+UPDATE `wts_db`.`wts_app_tab` SET `buffer_minute_time`='1' WHERE `application_id`='4';
+UPDATE `wts_db`.`wts_app_tab` SET `buffer_minute_time`='1' WHERE `application_id`='5';
+UPDATE `wts_db`.`wts_app_tab` SET `buffer_minute_time`='1' WHERE `application_id`='6';
  commit;
  
  
