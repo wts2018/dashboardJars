@@ -228,3 +228,7 @@ each_problem_flag boolean default false,
  ); 
  
  commit;
+ 
+ alter table wts_db.wts_trans_tab
+add column sendemailflag integer default 0;
+commit;
