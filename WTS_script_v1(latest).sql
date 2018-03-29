@@ -199,7 +199,7 @@ commit;
 
 alter table wts_app_tab add column buffer_minute_time integer;
 alter table wts_app_tab add column email_id varchar(200);
-alter table wts_app_tab add column ph_no numeric(20);
+alter table wts_app_tab add column support_contact numeric(20);
 
 alter table wts_batch_tab add column buffer_minute_time integer;
 alter table wts_batch_tab add column email_id varchar(200);
