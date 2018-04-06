@@ -5,7 +5,7 @@ use WTS_DB;
 
 
 create table  WTS_process_tab(
-   process_id INTEGER NOT NULL,
+   process_id INTEGER NOT NULL AUTO_INCREMENT,
    sequence INTEGER NOT NULL,
    expected_start_time TIMESTAMP,
    expected_end_time TIMESTAMP,
@@ -20,7 +20,7 @@ create table  WTS_process_tab(
 
 create table WTS_Trig_tab
 (
-   trig_id INTEGER NOT NULL,
+   trig_id INTEGER NOT NULL AUTO_INCREMENT,
    expected_start_time time,
    expected_end_time time,
    host VARCHAR(100) NOT NULL,
@@ -35,42 +35,68 @@ create table WTS_Trig_tab
  
 
 create table  WTS_app_tab(
+   application_id INTEGER NOT NULL AUTO_INCREMENT,
+   name VARCHAR(50) NOT NULL,
+   comments VARCHAR(100),
+   enable_flag boolean default true,
+   last_update_time TIMESTAMP,
+   PRIMARY KEY (application_id)
+); 
+
+
+create table  WTS_process_app_map_tab(
+   process_app_map_id INTEGER NOT NULL AUTO_INCREMENT,
+   process_id INTEGER NOT NULL,
    application_id INTEGER NOT NULL,
    name VARCHAR(50) NOT NULL,
-   process_id INTEGER NOT NULL,
    sequence INTEGER NOT NULL,
    trig_id INTEGER NOT NULL,
    comments VARCHAR(100),
    weight INTEGER,
+   start_time timestamp,
+   end_time timestamp,
+   buffer_minute_time integer,
+   email_id varchar(200),
+   support_contact numeric(20),
    enable_flag boolean default true,
    last_update_time TIMESTAMP,
-   PRIMARY KEY (application_id),
+   PRIMARY KEY (process_app_map_id),
+   CONSTRAINT UC_proc_app_mapping_tab UNIQUE (process_id,application_id),
    FOREIGN KEY (process_id) REFERENCES WTS_process_tab(process_id),
+   FOREIGN KEY (application_id) REFERENCES WTS_app_tab(application_id),
    FOREIGN KEY (trig_id) REFERENCES WTS_Trig_tab(trig_id)
 ); 
 
- create table WTS_batch_tab(
-   batch_id INTEGER NOT NULL,
-   application_id INTEGER NOT NULL,
-   name VARCHAR(200) NOT NULL,
-   UOT VARCHAR(50) NOT NULL,
-   process_id INTEGER NOT NULL,
+
+
+create table  WTS_app_mapping_tab(
+   app_mapping_id INTEGER NOT NULL AUTO_INCREMENT,
+   parent_id INTEGER NOT NULL,
+   child_id INTEGER NOT NULL,
+   name VARCHAR(50) NOT NULL,
    sequence INTEGER NOT NULL,
    trig_id INTEGER NOT NULL,
+   comments VARCHAR(100),
    weight INTEGER,
+   start_time timestamp,
+   end_time timestamp,
+   buffer_minute_time integer,
+   email_id varchar(200),
+   support_contact numeric(20),
    enable_flag boolean default true,
-   comments VARCHAR(200) NOT NULL,
    last_update_time TIMESTAMP,
-	PRIMARY KEY (batch_id),
-	FOREIGN KEY (process_id) REFERENCES WTS_process_tab(process_id),
-	FOREIGN KEY (application_id) REFERENCES WTS_app_tab(application_id),
+   PRIMARY KEY (app_mapping_id),
+   CONSTRAINT UC_app_mapping_tab UNIQUE (parent_id,child_id),
+   FOREIGN KEY (parent_id) REFERENCES WTS_app_tab(application_id),
+   FOREIGN KEY (child_id) REFERENCES WTS_app_tab(application_id),
    FOREIGN KEY (trig_id) REFERENCES WTS_Trig_tab(trig_id)
 ); 
+
 
  
 
 
-create table WTS_status
+create table wts_status_tab
 (
 status_id INTEGER NOT NULL,
 name varchar(50) NOT NULL,
@@ -81,13 +107,15 @@ create table WTS_Trans_tab(
  transaction_id INTEGER NOT NULL AUTO_INCREMENT,
  event_date VARCHAR(20) ,
  process_id INTEGER ,
- batch_id INTEGER ,
+ app_mapping_id INTEGER ,
  application_id INTEGER ,
  start_transaction TIMESTAMP NULL,
  end_transaction TIMESTAMP NULL,
  status_id INTEGER not null,
+ sendemailflag integer default 0,
+ sendetaemailflag integer default 0,
  PRIMARY KEY(transaction_id),
- FOREIGN KEY (status_id) REFERENCES WTS_status(status_id)
+ FOREIGN KEY (status_id) REFERENCES wts_status_tab(status_id)
  ); 
 
 create table  WTS_user_tab(
@@ -99,14 +127,18 @@ create table  WTS_user_tab(
 );
 
 
-
-insert into wts_status(status_id,NAME) values(1,"GREEN"); 
-
-insert into wts_status(status_id,NAME) values(2,"RED");
-
-insert into wts_status(status_id,NAME) values(3,"GREY"); 
+ create table wts_new_eta_tab(
+ eta_id INTEGER NOT NULL AUTO_INCREMENT,
+ event_date VARCHAR(20) ,
+ process_id INTEGER ,
+ app_mapping_id INTEGER ,
+ application_id INTEGER ,
+ new_eta_start_transaction TIMESTAMP NULL,
+ new_eta_end_transaction TIMESTAMP NULL,
+ each_problem_flag boolean default false,
+ PRIMARY KEY(eta_id)
+ ); 
  
-
  
 insert into WTS_process_tab (process_id,sequence,expected_start_time,
 expected_end_time,comments,last_update_time,name,weight,enable_flag)
@@ -128,30 +160,54 @@ insert into WTS_Trig_tab
 (trig_id,expected_start_time,expected_end_time,host,port,trigger_file,trigger_file_path,last_update_time,comments)
 values(3,"22:10:00","8:00:00","oncspdp2.onc.michelin.com",23,"PMB_TRG","/busdata/ra2p/nca0",sysdate(),"Comment2");
 
-insert into WTS_app_tab (application_id,name,sequence,process_id,trig_id,comments,weight,last_update_time)
-values(1,"SPD",1,1,1,"DummyTExt",0,sysdate());
 
-insert into WTS_app_tab (application_id,name,sequence,process_id,trig_id,comments,weight,last_update_time)
-values(2,"A2P",2,1,2,"DummyTXt",0,sysdate());
+insert into WTS_process_tab (process_id,sequence,expected_start_time,
+expected_end_time,comments,last_update_time,name,weight,enable_flag)
+values(2,2,"2018-03-22  14:45:24","2020-03-24  13:45:43","Order processing",
+sysdate(),"Process 2",0,1);
 
-insert into WTS_app_tab (application_id,name,sequence,process_id,trig_id,comments,weight,last_update_time)
-values(3,"PMB",3,1,2,"DummyTXt",0,sysdate());
 
+commit;
+
+insert into WTS_app_tab (application_id,name,comments,last_update_time)
+values(1,"SPD","DummyTExt",sysdate());
+
+insert into WTS_app_tab (application_id,name,comments,last_update_time)
+values(2,"A2P","DummyTExt",sysdate());
+
+insert into WTS_app_tab (application_id,name,comments,last_update_time)
+values(3,"PMB","DummyTExt" ,sysdate());
+
+insert into WTS_app_tab (application_id,name,comments,last_update_time)
+values(4,"EDS","DummyTExt" ,sysdate());
+
+insert into WTS_app_tab (application_id,name,comments,last_update_time)
+values(5,"DSS","DummyTExt" ,sysdate());
+
+insert into WTS_app_tab (application_id,name,comments,last_update_time)
+values(6,"SDS","DummyTExt" ,sysdate());
+
+
+insert into WTS_app_tab (application_id,name,comments,last_update_time)
+values(7,"BAT1","SPD_BAT1" ,sysdate());
 
 
 COMMIT;
 
-alter table wts_app_tab add column transaction_id Integer;
-alter table wts_app_tab
-add  foreign key (transaction_id) references wts_db.wts_trans_tab(transaction_id);
+INSERT INTO wts_db.wts_process_app_map_tab (process_app_map_id, process_id, application_id, name, sequence, trig_id, comments, weight, buffer_minute_time, enable_flag,start_time,end_time,last_update_time) VALUES ('1', '1', '1', 'P1-SPD', '1', '1', 'P1-SPD', '0', '1', '1','2018-04-06 20:19:05', '2018-04-06 20:19:05',sysdate());
 
-RENAME TABLE wts_status to wts_status_tab;
+INSERT INTO wts_db.wts_process_app_map_tab (process_app_map_id, process_id, application_id, name, sequence, trig_id, comments, weight, buffer_minute_time, enable_flag,start_time,end_time,last_update_time) VALUES ('2', '1', '2', 'P1-A2P', '2', '1', 'P1-A2P', '0', '1', '1','2018-04-06 20:19:05', '2018-04-06 20:19:05',sysdate());
 
-alter table wts_db.wts_app_tab
-add column start_time timestamp;
+INSERT INTO wts_db.wts_process_app_map_tab (process_app_map_id, process_id, application_id, name, sequence, trig_id, comments, weight, buffer_minute_time, enable_flag,start_time,end_time,last_update_time) VALUES ('3', '1', '3', 'P1-PMB', '3', '1', 'P1-SPD', '0', '1', '1','2018-04-06 20:19:05', '2018-04-06 20:19:05',sysdate());
 
-alter table wts_db.wts_app_tab
-add column end_time timestamp;
+
+INSERT INTO wts_db.wts_process_app_map_tab (process_app_map_id, process_id, application_id, name, sequence, trig_id, comments, weight, buffer_minute_time, enable_flag,start_time,end_time,last_update_time) VALUES ('4', '2', '4', 'P2-EDS', '1', '1', 'P1-SPD', '0', '1', '1','2018-04-06 20:19:05', '2018-04-06 20:19:05',sysdate());
+
+INSERT INTO wts_db.wts_process_app_map_tab (process_app_map_id, process_id, application_id, name, sequence, trig_id, comments, weight, buffer_minute_time, enable_flag,start_time,end_time,last_update_time) VALUES ('5', '2', '5', 'P2-DSS', '2', '1', 'P1-A2P', '0', '1', '1','2018-04-06 20:19:05', '2018-04-06 20:19:05',sysdate());
+
+INSERT INTO wts_db.wts_process_app_map_tab (process_app_map_id, process_id, application_id, name, sequence, trig_id, comments, weight, buffer_minute_time, enable_flag,start_time,end_time,last_update_time) VALUES ('6', '2', '6', 'P2-SDS', '3', '1', 'P1-SPD', '0', '1', '1','2018-04-06 20:19:05', '2018-04-06 20:19:05',sysdate());
+
+INSERT INTO wts_db.wts_app_mapping_tab (app_mapping_id, parent_id, child_id, name, sequence, trig_id, comments, weight, buffer_minute_time, enable_flag,start_time,end_time,last_update_time) VALUES ('1', '1', '7', 'SPD_BAT1', '1', '1', 'SPD_BAT1', '0', '1', '1','2018-04-06 20:19:05', '2018-04-06 20:19:05',sysdate());
 
 
 
@@ -160,11 +216,6 @@ create table  WTS_treatment_tab(
 );
 
 commit;
-
-
-UPDATE `wts_db`.`wts_app_tab` SET `start_time`='2018-03-21 12:06:18', `end_time`='2018-03-13 16:30:00' WHERE `application_id`='1';
-UPDATE `wts_db`.`wts_app_tab` SET `start_time`='2018-03-13 14:22:00', `end_time`='2018-03-13 16:30:00' WHERE `application_id`='2';
-UPDATE `wts_db`.`wts_app_tab` SET `start_time`='2018-03-13 14:22:00', `end_time`='2018-03-13 16:30:00' WHERE `application_id`='3';
 
 
 DELETE FROM wts_db.wts_status_tab;
@@ -180,55 +231,7 @@ COMMIT;
 
 
 
-insert into WTS_process_tab (process_id,sequence,expected_start_time,
-expected_end_time,comments,last_update_time,name,weight,enable_flag)
-values(2,2,"2018-03-22  14:45:24","2020-03-24  13:45:43","Order processing",
-sysdate(),"Process 2",0,1);
 
 
-insert into WTS_app_tab (application_id,name,sequence,process_id,trig_id,comments,weight,last_update_time,start_time,end_time)
-values(4,"SDS",1,2,1,"DummyTXt",0,sysdate(),"2018-03-22 12:06:18","2018-03-22 18:06:18");
 
-insert into WTS_app_tab (application_id,name,sequence,process_id,trig_id,comments,weight,last_update_time,start_time,end_time)
-values(5,"ERP",2,2,2,"DummyTXt",0,sysdate(),"2018-03-22 12:06:18","2018-03-22 18:30:18");
-
-insert into WTS_app_tab (application_id,name,sequence,process_id,trig_id,comments,weight,last_update_time,start_time,end_time)
-values(6,"DSS",3,2,3,"DummyTXt",0,sysdate(),"2018-03-22 12:06:18","2018-03-22 19:06:18");
-
-commit;
-
-alter table wts_app_tab add column buffer_minute_time integer;
-alter table wts_app_tab add column email_id varchar(200);
-alter table wts_app_tab add column support_contact numeric(20);
-
-alter table wts_batch_tab add column buffer_minute_time integer;
-alter table wts_batch_tab add column email_id varchar(200);
-
-commit;
-
-UPDATE `wts_db`.`wts_app_tab` SET `buffer_minute_time`='1' WHERE `application_id`='1';
-UPDATE `wts_db`.`wts_app_tab` SET `buffer_minute_time`='1' WHERE `application_id`='2';
-UPDATE `wts_db`.`wts_app_tab` SET `buffer_minute_time`='1' WHERE `application_id`='3';
-UPDATE `wts_db`.`wts_app_tab` SET `buffer_minute_time`='1' WHERE `application_id`='4';
-UPDATE `wts_db`.`wts_app_tab` SET `buffer_minute_time`='1' WHERE `application_id`='5';
-UPDATE `wts_db`.`wts_app_tab` SET `buffer_minute_time`='1' WHERE `application_id`='6';
- commit;
  
- 
- create table wts_new_eta_tab(
- eta_id INTEGER NOT NULL AUTO_INCREMENT,
- event_date VARCHAR(20) ,
- process_id INTEGER ,
- batch_id INTEGER ,
- application_id INTEGER ,
- new_eta_start_transaction TIMESTAMP NULL,
- new_eta_end_transaction TIMESTAMP NULL,
-each_problem_flag boolean default false,
- PRIMARY KEY(eta_id)
- ); 
- 
- commit;
- 
- alter table wts_db.wts_trans_tab
-add column sendemailflag integer default 0;
-commit;
