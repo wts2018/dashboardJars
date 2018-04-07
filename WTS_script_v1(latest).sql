@@ -71,6 +71,7 @@ create table  WTS_process_app_map_tab(
 
 create table  WTS_app_mapping_tab(
    app_mapping_id INTEGER NOT NULL AUTO_INCREMENT,
+   process_id INTEGER NOT NULL,
    parent_id INTEGER NOT NULL,
    child_id INTEGER NOT NULL,
    name VARCHAR(50) NOT NULL,
@@ -107,8 +108,9 @@ create table WTS_Trans_tab(
  transaction_id INTEGER NOT NULL AUTO_INCREMENT,
  event_date VARCHAR(20) ,
  process_id INTEGER ,
- app_mapping_id INTEGER ,
  application_id INTEGER ,
+ parent_id INTEGER ,
+ child_id INTEGER ,
  start_transaction TIMESTAMP NULL,
  end_transaction TIMESTAMP NULL,
  status_id INTEGER not null,
@@ -131,7 +133,8 @@ create table  WTS_user_tab(
  eta_id INTEGER NOT NULL AUTO_INCREMENT,
  event_date VARCHAR(20) ,
  process_id INTEGER ,
- app_mapping_id INTEGER ,
+ parent_id INTEGER ,
+ child_id INTEGER ,
  application_id INTEGER ,
  new_eta_start_transaction TIMESTAMP NULL,
  new_eta_end_transaction TIMESTAMP NULL,
@@ -191,6 +194,8 @@ values(6,"SDS","DummyTExt" ,sysdate());
 insert into WTS_app_tab (application_id,name,comments,last_update_time)
 values(7,"BAT1","SPD_BAT1" ,sysdate());
 
+insert into WTS_app_tab (application_id,name,comments,last_update_time)
+values(8,"BAT2","SPD_BAT2" ,sysdate());
 
 COMMIT;
 
@@ -207,8 +212,9 @@ INSERT INTO wts_db.wts_process_app_map_tab (process_app_map_id, process_id, appl
 
 INSERT INTO wts_db.wts_process_app_map_tab (process_app_map_id, process_id, application_id, name, sequence, trig_id, comments, weight, buffer_minute_time, enable_flag,start_time,end_time,last_update_time) VALUES ('6', '2', '6', 'P2-SDS', '3', '1', 'P1-SPD', '0', '1', '1','2018-04-06 20:19:05', '2018-04-06 20:19:05',sysdate());
 
-INSERT INTO wts_db.wts_app_mapping_tab (app_mapping_id, parent_id, child_id, name, sequence, trig_id, comments, weight, buffer_minute_time, enable_flag,start_time,end_time,last_update_time) VALUES ('1', '1', '7', 'SPD_BAT1', '1', '1', 'SPD_BAT1', '0', '1', '1','2018-04-06 20:19:05', '2018-04-06 20:19:05',sysdate());
+INSERT INTO wts_db.wts_app_mapping_tab (app_mapping_id, parent_id, child_id, name, sequence, trig_id, comments, weight, buffer_minute_time, enable_flag,start_time,end_time,last_update_time,process_id) VALUES ('1', '1', '7', 'SPD_BAT1', '1', '1', 'SPD_BAT1', '0', '1', '1','2018-04-06 20:19:05', '2018-04-06 20:19:05',sysdate(),'1');
 
+INSERT INTO wts_db.wts_app_mapping_tab (app_mapping_id, parent_id, child_id, name, sequence, trig_id, comments, weight, buffer_minute_time, enable_flag,start_time,end_time,last_update_time,process_id) VALUES ('2', '1', '8', 'SPD_BAT2', '2', '1', 'SPD_BAT2', '0', '1', '1','2018-04-06 20:19:05', '2018-04-06 20:19:05',sysdate(),'1');
 
 
 create table  WTS_treatment_tab(
