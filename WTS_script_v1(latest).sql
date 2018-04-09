@@ -114,6 +114,8 @@ create table WTS_Trans_tab(
  start_transaction TIMESTAMP NULL,
  end_transaction TIMESTAMP NULL,
  status_id INTEGER not null,
+ process_btn_status_id INTEGER,
+ app_btn_status_id INTEGER,
  sendemailflag integer default 0,
  sendetaemailflag integer default 0,
  PRIMARY KEY(transaction_id),
@@ -230,6 +232,9 @@ INSERT INTO wts_db.wts_status_tab (status_id, name) VALUES ('1', 'GREEN');
 INSERT INTO wts_db.wts_status_tab (status_id, name) VALUES ('2', 'RED');
 INSERT INTO wts_db.wts_status_tab (status_id, name) VALUES ('3', 'VIOLET');
 INSERT INTO wts_db.wts_status_tab (status_id, name) VALUES ('4', 'ORANGE');
+INSERT INTO wts_db.wts_status_tab (status_id, name) VALUES ('5', 'AMBER');
+INSERT INTO wts_db.wts_status_tab (status_id, name) VALUES ('6', 'LIGHT GREEN');
+
 
 COMMIT;
 
