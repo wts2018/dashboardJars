@@ -1,0 +1,29 @@
+Service Reference:
+
+1. http://<host>:<port>/wts/process - gives dashboard page data including transactions and ETAs
+
+2. http://<host>:<port>/wts/procup/date/<process_id> - gets the transaction and ETA calculated for the process Id passed. It only gets called for the processes in dashboard page.
+
+3. http://<host>:<port>/wts/application/<application_id>/<process_id>/<parent_id> -  This gives the child page data including related transactions and ETAs
+		
+		A.	<application_id> - is the selected application link’s application id 
+		B.	<process_id> - this value is process id of selected application
+		C.	<parent_id>- this value is parent application id of selected application, when we move from second level  to third  level or next, when the move is from main page to second level click please pass 0 for this as we do not need this value in this case.
+
+		Some examples as per updated DB script:
+		http://localhost:8080/wts/application/1/1/0 - SPD click from main page to next page
+		http://localhost:8080/wts/application/7/1/1 - Third level SPD bat1 click
+
+
+4. http://<host>:<port>/wts/transaction/childpage /{processId}/{parentId}/{mainPageNav} -gets the transaction and ETA calculated for the process Id,parent, child ID passed. It only gets called for the processes / apps when we move to child page.
+
+-	processId – to be passed thru out the page navigation of a main process flow
+-	parentId- the selected app id for navigation
+-	mainPageNav – pass 1 only if we are moving from dashboard main page to child page, else 0 if it is child to child page
+
+Example:
+http://localhost:8080/wts/transaction/childpage/1/1/1
+
+
+
+
