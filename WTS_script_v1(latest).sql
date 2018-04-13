@@ -239,6 +239,63 @@ INSERT INTO wts_db.wts_status_tab (status_id, name) VALUES ('6', 'LIGHT GREEN');
 COMMIT;
 
 
+UPDATE `wts_db`.`wts_app_tab` SET `name`='SPD_PROCESS_1' WHERE `application_id`='7';
+UPDATE `wts_db`.`wts_app_tab` SET `name`='SPD_PROCESS_2' WHERE `application_id`='8';
+INSERT INTO `wts_db`.`wts_app_tab` (`application_id`, `name`, `comments`, `enable_flag`, `last_update_time`) VALUES ('9', 'A2P_PROCESS_1', 'A2P_BAT1', '1', '2018-04-10 15:04:42');
+INSERT INTO `wts_db`.`wts_app_tab` (`application_id`, `name`, `comments`, `enable_flag`, `last_update_time`) VALUES ('10', 'A2P_PROCESS_2', 'A2P_BAT1', '1', '2018-04-10 15:04:42');
+INSERT INTO `wts_db`.`wts_app_tab` (`application_id`, `name`, `comments`, `enable_flag`, `last_update_time`) VALUES ('11', 'PMB_PROCESS_1', 'A2P_BAT1', '1', '2018-04-10 15:04:42');
+INSERT INTO `wts_db`.`wts_app_tab` (`application_id`, `name`, `comments`, `enable_flag`, `last_update_time`) VALUES ('12', 'PMB_PROCESS_2', 'A2P_BAT1', '1', '2018-04-10 15:04:42');
+INSERT INTO `wts_db`.`wts_app_tab` (`application_id`, `name`, `comments`, `enable_flag`, `last_update_time`) VALUES ('13', 'SDS_PROCESS_1', 'A2P_BAT1', '1', '2018-04-10 15:04:42');
+INSERT INTO `wts_db`.`wts_app_tab` (`application_id`, `name`, `comments`, `enable_flag`, `last_update_time`) VALUES ('14', 'SDS_PROCESS_2', 'DUMMY', '1', '2018-04-10 15:04:42');
+INSERT INTO `wts_db`.`wts_app_tab` (`application_id`, `name`, `comments`, `enable_flag`, `last_update_time`) VALUES ('15', 'ERP_PROCESS_1', 'DUMMY', '1', '2018-04-10 15:04:42');
+INSERT INTO `wts_db`.`wts_app_tab` (`application_id`, `name`, `comments`, `enable_flag`, `last_update_time`) VALUES ('16', 'ERP_PROCESS_2', 'DUMMY', '1', '2018-04-10 15:04:42');
+INSERT INTO `wts_db`.`wts_app_tab` (`application_id`, `name`, `comments`, `enable_flag`, `last_update_time`) VALUES ('17', 'DSS_PROCESS_1', 'DUMMY', '1', '2018-04-10 15:04:42');
+INSERT INTO `wts_db`.`wts_app_tab` (`application_id`, `name`, `comments`, `enable_flag`, `last_update_time`) VALUES ('18', 'DSS_PROCESS_2', 'DUMMY', '1', '2018-04-10 15:04:42');
+
+
+
+
+
+
+UPDATE `wts_db`.`wts_app_mapping_tab` SET `name`='SPD_PROCESS_1', `comments`='DUMMY' WHERE `app_mapping_id`='1';
+UPDATE `wts_db`.`wts_app_mapping_tab` SET `name`='SPD_PROCESS_2', `comments`='DUMMY' WHERE `app_mapping_id`='2';
+INSERT INTO `wts_db`.`wts_app_mapping_tab` (`app_mapping_id`, `process_id`, `parent_id`, `child_id`, `name`, `sequence`, `trig_id`, `comments`, `weight`, `start_time`, `end_time`, `buffer_minute_time`, `enable_flag`, `last_update_time`) VALUES ('3', '1', '2', '9', 'A2P_PROCESS_1', '1', '1', 'DUMMY', '0', '2018-04-12 12:05:00', '2018-04-12 12:05:00', '1', '1', '2018-04-10 15:04:43');
+INSERT INTO `wts_db`.`wts_app_mapping_tab` (`app_mapping_id`, `process_id`, `parent_id`, `child_id`, `name`, `sequence`, `trig_id`, `comments`, `weight`, `start_time`, `end_time`, `buffer_minute_time`, `enable_flag`, `last_update_time`) VALUES ('4', '1', '2', '10', 'A2P_PROCESS_2', '2', '1', 'DUMMY', '0', '2018-04-12 12:05:00', '2018-04-12 12:05:00', '1', '1', '2018-04-10 15:04:43');
+INSERT INTO `wts_db`.`wts_app_mapping_tab` (`app_mapping_id`, `process_id`, `parent_id`, `child_id`, `name`, `sequence`, `trig_id`, `comments`, `weight`, `start_time`, `end_time`, `buffer_minute_time`, `enable_flag`, `last_update_time`) VALUES ('5', '1', '3', '11', 'PMB_PROCESS_1', '1', '1', 'DUMMY', '0', '2018-04-12 12:05:00', '2018-04-12 12:05:00', '1', '1', '2018-04-10 15:04:43');
+INSERT INTO `wts_db`.`wts_app_mapping_tab` (`app_mapping_id`, `process_id`, `parent_id`, `child_id`, `name`, `sequence`, `trig_id`, `comments`, `weight`, `start_time`, `end_time`, `buffer_minute_time`, `enable_flag`, `last_update_time`) VALUES ('6', '1', '3', '12', 'PMB_PROCESS_2', '2', '1', 'DUMMY', '0', '2018-04-12 12:05:00', '2018-04-12 12:05:00', '1', '1', '2018-04-10 15:04:43');
+INSERT INTO `wts_db`.`wts_app_mapping_tab` (`app_mapping_id`, `process_id`, `parent_id`, `child_id`, `name`, `sequence`, `trig_id`, `comments`, `weight`, `start_time`, `end_time`, `buffer_minute_time`, `enable_flag`, `last_update_time`) VALUES ('7', '2', '1', '13', 'SDS_PROCESS_1', '1', '1', 'DUMMY', '0', '2018-04-12 12:05:00', '2018-04-12 12:05:00', '1', '1', '2018-04-10 15:04:43');
+INSERT INTO `wts_db`.`wts_app_mapping_tab` (`app_mapping_id`, `process_id`, `parent_id`, `child_id`, `name`, `sequence`, `trig_id`, `comments`, `weight`, `start_time`, `end_time`, `buffer_minute_time`, `enable_flag`, `last_update_time`) VALUES ('8', '2', '1', '14', 'SDS_PROCESS_2', '2', '1', 'DUMMY', '0', '2018-04-12 12:05:00', '2018-04-12 12:05:00', '1', '1', '2018-04-10 15:04:43');
+INSERT INTO `wts_db`.`wts_app_mapping_tab` (`app_mapping_id`, `process_id`, `parent_id`, `child_id`, `name`, `sequence`, `trig_id`, `comments`, `weight`, `start_time`, `end_time`, `buffer_minute_time`, `enable_flag`, `last_update_time`) VALUES ('9', '2', '2', '15', 'ERP_PROCESS_1', '1', '1', 'DUMMY', '0', '2018-04-12 12:05:00', '2018-04-12 12:05:00', '1', '1', '2018-04-10 15:04:43');
+INSERT INTO `wts_db`.`wts_app_mapping_tab` (`app_mapping_id`, `process_id`, `parent_id`, `child_id`, `name`, `sequence`, `trig_id`, `comments`, `weight`, `start_time`, `end_time`, `buffer_minute_time`, `enable_flag`, `last_update_time`) VALUES ('10', '2', '2', '16', 'ERP_PROCESS_2', '2', '1', 'DUMMY', '0', '2018-04-12 12:05:00', '2018-04-12 12:05:00', '1', '1', '2018-04-10 15:04:43');
+INSERT INTO `wts_db`.`wts_app_mapping_tab` (`app_mapping_id`, `process_id`, `parent_id`, `child_id`, `name`, `sequence`, `trig_id`, `comments`, `weight`, `start_time`, `end_time`, `buffer_minute_time`, `enable_flag`, `last_update_time`) VALUES ('11', '2', '3', '17', 'DSS_PROCESS_1', '1', '1', 'DUMMY', '0', '2018-04-12 12:05:00', '2018-04-12 12:05:00', '1', '1', '2018-04-10 15:04:43');
+INSERT INTO `wts_db`.`wts_app_mapping_tab` (`app_mapping_id`, `process_id`, `parent_id`, `child_id`, `name`, `sequence`, `trig_id`, `comments`, `weight`, `start_time`, `end_time`, `buffer_minute_time`, `enable_flag`, `last_update_time`) VALUES ('12', '2', '3', '18', 'DSS_PROCESS_2', '2', '1', 'DUMMY', '0', '2018-04-12 12:05:00', '2018-04-12 12:05:00', '1', '1', '2018-04-10 15:04:43');
+
+
+UPDATE `wts_db`.`wts_app_tab` SET `name`='SDS' WHERE `application_id`='4';
+UPDATE `wts_db`.`wts_app_tab` SET `name`='ERP' WHERE `application_id`='5';
+UPDATE `wts_db`.`wts_app_tab` SET `name`='DSS' WHERE `application_id`='6';
+
+
+UPDATE `wts_db`.`wts_app_tab` SET `name`='DSS_PROCESS_1' WHERE `application_id`='18';
+INSERT INTO `wts_db`.`wts_app_tab` (`application_id`, `name`, `comments`, `enable_flag`, `last_update_time`) VALUES ('19', 'DSS_PROCESS_2', 'DUMMY', '1', '2018-04-10 15:04:42');
+UPDATE `wts_db`.`wts_app_tab` SET `name`='ERP_PROCESS_3' WHERE `application_id`='17';
+
+
+INSERT INTO `wts_db`.`wts_app_mapping_tab` (`app_mapping_id`, `process_id`, `parent_id`, `child_id`, `name`, `sequence`, `trig_id`, `comments`, `weight`, `start_time`, `end_time`, `buffer_minute_time`, `enable_flag`, `last_update_time`) VALUES ('13', '2', '3', '19', 'DSS_PROCESS_2', '2', '1', 'DUMMY', '0', '2018-04-12 12:05:00', '2018-04-12 12:05:00', '1', '1', '2018-04-12 12:05:00');
+UPDATE `wts_db`.`wts_app_mapping_tab` SET `name`='DSS_PROCESS_1', `sequence`='1' WHERE `app_mapping_id`='12';
+UPDATE `wts_db`.`wts_app_mapping_tab` SET `parent_id`='2', `name`='ERP_PROCESS_3', `sequence`='3' WHERE `app_mapping_id`='11';
+Thanks and Regards,
+
+Anurag Bhattacharjee | Associate Software Engineer 
+APAC Multi-Industry and Government BU
+CGI Bengaluru- Divyasree Technopolis
+124-125, Yemlur P.O. Off Airport Road, Bangalore – 560037
+Mobile: +91 9678703214
+VOIP: 8076572 
+Email ID: anurag.bhattacharjee@cgi.com
+
+
+
 
 
 
