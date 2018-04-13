@@ -284,15 +284,7 @@ UPDATE `wts_db`.`wts_app_tab` SET `name`='ERP_PROCESS_3' WHERE `application_id`=
 INSERT INTO `wts_db`.`wts_app_mapping_tab` (`app_mapping_id`, `process_id`, `parent_id`, `child_id`, `name`, `sequence`, `trig_id`, `comments`, `weight`, `start_time`, `end_time`, `buffer_minute_time`, `enable_flag`, `last_update_time`) VALUES ('13', '2', '3', '19', 'DSS_PROCESS_2', '2', '1', 'DUMMY', '0', '2018-04-12 12:05:00', '2018-04-12 12:05:00', '1', '1', '2018-04-12 12:05:00');
 UPDATE `wts_db`.`wts_app_mapping_tab` SET `name`='DSS_PROCESS_1', `sequence`='1' WHERE `app_mapping_id`='12';
 UPDATE `wts_db`.`wts_app_mapping_tab` SET `parent_id`='2', `name`='ERP_PROCESS_3', `sequence`='3' WHERE `app_mapping_id`='11';
-Thanks and Regards,
 
-Anurag Bhattacharjee | Associate Software Engineer 
-APAC Multi-Industry and Government BU
-CGI Bengaluru- Divyasree Technopolis
-124-125, Yemlur P.O. Off Airport Road, Bangalore – 560037
-Mobile: +91 9678703214
-VOIP: 8076572 
-Email ID: anurag.bhattacharjee@cgi.com
 
 
 
